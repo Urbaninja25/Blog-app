@@ -6,4 +6,6 @@ module.exports = {
     "mongodb+srv://nugi:egeosi.@advancednode.n6r6fnt.mongodb.net/advnode?retryWrites=true&w=majority",
   cookieKey: "123123123",
   redisUrl: "redis://127.0.0.1:6379",
+  accessKeyId: "AAKIARCQWQ7PYPU4ASPUP",
+  secretAccessKey: "URMgVcXOgXk7+EB9V/WCGKoUAoaEtoZyHCbcoJvjM",
 };

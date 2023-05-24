@@ -17,16 +17,13 @@ jobs:
     services:
       mongodb:
         image: mongo
-        #So, by default, they assign the MongoDB instance to Mongo's default port of 27 0 1 7.
         ports:
           - 27017:27017
       redis:
         image: redis
-        # defoult redis server port
         ports:
           - 6379:6379
 
-    # აი ეს  დააყენებს  ci ს დროს port ს 3000 ზე
     env:
       NODE_ENV: ci
       PORT: 3000
@@ -39,15 +36,23 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install Dependencies
-
         run: |
           npm install --legacy-peer-deps
           npm run build
 
       - name: Start server
-
         run: |
           nohup npm run start &
           sleep 3
+
       - name: Run tests
-        run: npm run test
+        env:
+          ENV_VARIABLES: ${{ secrets.ENV_VARIABLES }}
+       run: |
+    export ENV_VARIABLES_JSON="${{ env.ENV_VARIABLES }}"
+    export GOOGLE_CLIENT_ID=$(echo $ENV_VARIABLES_JSON | jq -r '.GOOGLE_CLIENT_ID')
+    export GOOGLE_CLIENT_SECRET=$(echo $ENV_VARIABLES_JSON | jq -r '.GOOGLE_CLIENT_SECRET')
+    export MONGO_URI=$(echo $ENV_VARIABLES_JSON | jq -r '.MONGO_URI')
+    export COOKIE_KEY=$(echo $ENV_VARIABLES_JSON | jq -r '.COOKIE_KEY')
+    export REDIS_URL=$(echo $ENV_VARIABLES_JSON | jq -r '.REDIS_URL')
+    npm run test
