@@ -48,11 +48,10 @@ jobs:
       - name: Run tests
         env:
           ENV_VARIABLES: ${{ secrets.ENV_VARIABLES }}
-       run: |
-    export ENV_VARIABLES_JSON="${{ env.ENV_VARIABLES }}"
-    export GOOGLE_CLIENT_ID=$(echo $ENV_VARIABLES_JSON | jq -r '.GOOGLE_CLIENT_ID')
-    export GOOGLE_CLIENT_SECRET=$(echo $ENV_VARIABLES_JSON | jq -r '.GOOGLE_CLIENT_SECRET')
-    export MONGO_URI=$(echo $ENV_VARIABLES_JSON | jq -r '.MONGO_URI')
-    export COOKIE_KEY=$(echo $ENV_VARIABLES_JSON | jq -r '.COOKIE_KEY')
-    export REDIS_URL=$(echo $ENV_VARIABLES_JSON | jq -r '.REDIS_URL')
-    npm run test
+        run: |
+          export GOOGLE_CLIENT_ID=$(echo $ENV_VARIABLES | jq -r '.GOOGLE_CLIENT_ID')
+          export GOOGLE_CLIENT_SECRET=$(echo $ENV_VARIABLES | jq -r '.GOOGLE_CLIENT_SECRET')
+          export MONGO_URI=$(echo $ENV_VARIABLES | jq -r '.MONGO_URI')
+          export COOKIE_KEY=$(echo $ENV_VARIABLES | jq -r '.COOKIE_KEY')
+          export REDIS_URL=$(echo $ENV_VARIABLES | jq -r '.REDIS_URL')
+          npm run test
