@@ -31,8 +31,9 @@ app.use(passport.session());
 
 require("./routes/authRoutes")(app);
 require("./routes/blogRoutes")(app);
+//!!!!!!!!
+require("./routes/uploadRoutes")(app);
 
-// make sure server serves react client files in ci and prod mode რათა გავაუქმოთ react ის მიერ დაკავებული 3000 port ი და express მივცეთ მხოლოდ პორტი
 if (["production", "ci"].includes(process.env.NODE_ENV)) {
   app.use(express.static("client/build"));
 

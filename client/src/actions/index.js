@@ -21,6 +21,7 @@ export const submitBlog = (values, file, history) => async (dispatch) => {
   //ამან უნდა ატვირთოს მოცემულ url ზე ფოტო aws ში
   const upload = await axios.put(uploadConfig.data.url, file, {
     headers: {
+      //Making sure that the same file type actually gets uploaded as what was initially requested.ეს გვეხმარება კიდევ ერთი security layer შევქმნათ
       "Content-Type": file.type,
     },
   });
@@ -35,6 +36,7 @@ export const submitBlog = (values, file, history) => async (dispatch) => {
   dispatch({ type: FETCH_BLOG, payload: res.data });
 };
 
+//!!!!!!
 export const fetchBlogs = () => async (dispatch) => {
   const res = await axios.get("/api/blogs");
 

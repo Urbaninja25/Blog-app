@@ -53,7 +53,6 @@ class BlogFormReview extends Component {
 
   // !!!!!!!!!!!!!!!
   onFileChange(event) {
-    // The reason why event.target.files is used instead of event.target.file in this code is because the input element of type file allows users to select multiple files at once. Therefore, the files property of the event.target object returns a FileList, which is a list of the selected files.
     this.setState({ file: event.target.files[0] });
   }
 
@@ -67,9 +66,6 @@ class BlogFormReview extends Component {
         <input
           onChange={this.onFileChange.bind(this)}
           type="file"
-          // The image/* MIME type pattern is a wildcard that matches any image file type. This means that users will only be able to select files with image extensions such as JPEG, PNG, GIF, etc., and any other file types will be filtered out and not selectable.
-          //In the provided code, the restriction to upload only one image at once is not enforced by the code itself. The limitation on the number of files that can be uploaded is determined by the multiple attribute of the <input> element of type file.
-
           accept="image/*"
         />
 
