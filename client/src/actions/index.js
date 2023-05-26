@@ -15,22 +15,26 @@ export const handleToken = (token) => async (dispatch) => {
 
 //!!!!!!!
 export const submitBlog = (values, file, history) => async (dispatch) => {
-  //მე როგორც მესმის ჯერჯერობით ამან უნდა თხოვოს aws ს url
   const uploadConfig = await axios.get("/api/upload");
 
-  //ამან უნდა ატვირთოს მოცემულ url ზე ფოტო aws ში
-  const upload = await axios.put(uploadConfig.data.url, file, {
-    headers: {
-      //Making sure that the same file type actually gets uploaded as what was initially requested.ეს გვეხმარება კიდევ ერთი security layer შევქმნათ
-      "Content-Type": file.type,
-    },
-  });
+  if (file) {
+    // File is provided, proceed with image upload
+    await axios.put(uploadConfig.data.url, file, {
+      headers: {
+        "Content-Type": file.type,
+      },
+    });
 
-  //ამან უნდა ატვირთოს ბლოგი მონგოში თავის photo.key ით
-  const res = await axios.post("/api/blogs", {
-    ...values,
-    imageUrl: uploadConfig.data.key,
-  });
+    values = {
+      ...values,
+      imageUrl: uploadConfig.data.key,
+    };
+  } else {
+    // Remove the imageUrl property if file is not provided
+    delete values.imageUrl;
+  }
+
+  const res = await axios.post("/api/blogs", values);
 
   history.push("/blogs");
   dispatch({ type: FETCH_BLOG, payload: res.data });

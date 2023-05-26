@@ -17,6 +17,7 @@ class BlogShow extends Component {
             "https://my-blog-app-11.s3.eu-north-1.amazonaws.com/" +
             this.props.blog.imageUrl
           }
+          alt=" blog post"
         />
       );
     }
