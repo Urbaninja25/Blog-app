@@ -32,7 +32,7 @@ class CustomPage {
     await this.page.setCookie({ name: "session", value: session });
     await this.page.setCookie({ name: "session.sig", value: sig });
     //We have to put http colon slash, slash in front of every address that we try to visit.
-    await this.page.goto("http://localhost:3000/blogs");
+    await this.page.goto("http://localhost:4000/blogs");
     await this.page.waitFor('a[href="/auth/logout"]');
   }
 
